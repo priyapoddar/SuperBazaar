@@ -9,7 +9,6 @@ import java.util.List;
 //import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 public class SuperBazaar {
 	static String a = null;
 	static String b = null;
@@ -84,7 +83,7 @@ public class SuperBazaar {
 				b = result.getString("UserPassword");
 				c = result.getString("Type");
 				d = result.getInt("UserID");
-				e=result.getString("UserName");
+				e = result.getString("UserName");
 
 			}
 
@@ -119,7 +118,7 @@ public class SuperBazaar {
 		System.out.println("Here are the list of products\n");
 		System.out.println("ProductID|Product Name|Price Per Product");
 		String query = "select * from ProductDetails";
-		
+
 		try {
 			PreparedStatement ps1 = conn.prepareStatement(query);
 			ResultSet result = ps1.executeQuery();
@@ -268,7 +267,7 @@ public class SuperBazaar {
 		System.out.println("Please Rate Us Between 1 to 5 where\n5:Excellent\n4:Good\n3:OK\n2:Poor\n1:Very Poor");
 		Scanner s = new Scanner(System.in);
 		int fe = s.nextInt();
-		
+
 		switch (fe) {
 		case 5: {
 
@@ -284,7 +283,7 @@ public class SuperBazaar {
 				int lg = sq.nextInt();
 				switch (lg) {
 				case 1: {
-				
+
 					EnterUser();
 					break;
 				}
@@ -359,7 +358,7 @@ public class SuperBazaar {
 				ps2.setString(1, e);
 				ps2.setString(2, "Poor");
 				ps2.execute();
-				
+
 				System.out.println("Thankyou! Your Feedback is Important to Us");
 				System.out.println("For LogOut:Press 1\nTo Continue Shopping:Press 2");
 				Scanner sq = new Scanner(System.in);
@@ -412,14 +411,12 @@ public class SuperBazaar {
 		}
 	}
 
-	
-
 	private static void updation() {
 		// TODO Auto-generated method stub
 		int qa = 0;
 		int qs = 0;
-		int pi=0;
-		int quan=0;
+		int pi = 0;
+		int quan = 0;
 
 		try {
 
@@ -431,15 +428,15 @@ public class SuperBazaar {
 			ResultSet result1 = ps33.executeQuery();
 
 			while (result1.next()) {
-				 pi = result1.getInt("ProductID");
-			     quan = result1.getInt("Quantity");
-			     String query112 = "Select * from ProductDetails where ProductID=?";
-					PreparedStatement ps3334 = conn.prepareStatement(query112);
-					ps3334.setInt(1, pi);
-					ResultSet result11 = ps3334.executeQuery();
-					while (result11.next()) {
-						qa = result11.getInt("Qty_Available");
-						qs = result11.getInt("Quant_sold");
+				pi = result1.getInt("ProductID");
+				quan = result1.getInt("Quantity");
+				String query112 = "Select * from ProductDetails where ProductID=?";
+				PreparedStatement ps3334 = conn.prepareStatement(query112);
+				ps3334.setInt(1, pi);
+				ResultSet result11 = ps3334.executeQuery();
+				while (result11.next()) {
+					qa = result11.getInt("Qty_Available");
+					qs = result11.getInt("Quant_sold");
 
 					String query22 = "Update ProductDetails set Qty_Available=?,Quant_sold=? where ProductID=?";
 					PreparedStatement ps333 = conn.prepareStatement(query22);
@@ -449,12 +446,12 @@ public class SuperBazaar {
 					ps333.setInt(3, pi);
 					ps333.executeUpdate();
 
+				}
+			}
 
-				}			}
-
-		String query="Truncate table Cart";
-		PreparedStatement ps=conn.prepareStatement(query);
-		ps.executeUpdate(query);
+			String query = "Truncate table Cart";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.executeUpdate(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -510,13 +507,13 @@ public class SuperBazaar {
 		Scanner sc = null;
 		System.out.println("Add Products:Press 1\nView Customer Feedback:Press 2\nLogout:Press 3");
 		sc = new Scanner(System.in);
-		int p=sc.nextInt();
-		switch(p) {
-		case 1:{
-			
-			 System.out.println("How Many Products To be added?");
-			int nop=sc.nextInt();
-			for(int qw=nop;qw!=0;qw--) {
+		int p = sc.nextInt();
+		switch (p) {
+		case 1: {
+
+			System.out.println("How Many Products To be added?");
+			int nop = sc.nextInt();
+			for (int qw = nop; qw != 0; qw--) {
 				sc = new Scanner(System.in);
 				System.out.println("Enter the Product Name");
 				String prodName = sc.nextLine();
@@ -552,61 +549,56 @@ public class SuperBazaar {
 					boolean status = ps.execute();
 					if (!status) {
 						System.out.println("Product Added Successfully");
-					
 
 					} else {
 						System.out.println("Product Cannot Be Added");
-					
+
 					}
-					
-				
-				
+
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-			}productAdmin();
-break;
-		}case 2:{
+			}
+			productAdmin();
+			break;
+		}
+		case 2: {
 			try {
-				String query="Select * from Feedback";
-				PreparedStatement ps=conn.prepareStatement(query);
+				String query = "Select * from Feedback";
+				PreparedStatement ps = conn.prepareStatement(query);
 				ResultSet result = ps.executeQuery();
 				while (result.next()) {
-					String ui= result.getString("UserName");
+					String ui = result.getString("UserName");
 					String rat = result.getString("Rating");
-					System.out.println("UserName|Rating\n"+ui+"     |" +rat);
+					System.out.println("UserName|Rating\n" + ui + "     |" + rat);
 					productAdmin();
 					break;
 
 				}
-				
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-		}case 3:{
+		}
+		case 3: {
 			EnterUser();
 			break;
 		}
 		}
-				
-		
-		sc.close();	
-					}
-		
-	
+
+		sc.close();
+	}
 
 	public static void main(String[] args) {
-		
-		
+
 		// TODO Auto-generated method stub
 
 		SuperBazaar.getConnection();
 		SuperBazaar.EnterUser();
-		
 
 	}
 
