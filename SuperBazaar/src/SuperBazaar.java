@@ -9,10 +9,12 @@ import java.util.List;
 //import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class SuperBazaar {
 	static String a = null;
 	static String b = null;
 	static String c = null;
+	static String e = null;
 	static int d = 0;
 	static String pr = null;
 	static float prp = 0;
@@ -82,6 +84,7 @@ public class SuperBazaar {
 				b = result.getString("UserPassword");
 				c = result.getString("Type");
 				d = result.getInt("UserID");
+				e=result.getString("UserName");
 
 			}
 
@@ -270,9 +273,9 @@ public class SuperBazaar {
 		case 5: {
 
 			try {
-				String query = "Insert into Feedback (UserID,Rating)" + "values(?,?)";
+				String query = "Insert into Feedback (UserName,Rating)" + "values(?,?)";
 				PreparedStatement ps2 = conn.prepareStatement(query);
-				ps2.setInt(1, d);
+				ps2.setString(1, e);
 				ps2.setString(2, "Excellent");
 				ps2.execute();
 				System.out.println("Thankyou! Your Feedback is Important to Us");
@@ -281,6 +284,7 @@ public class SuperBazaar {
 				int lg = sq.nextInt();
 				switch (lg) {
 				case 1: {
+				
 					EnterUser();
 					break;
 				}
@@ -296,9 +300,9 @@ public class SuperBazaar {
 		case 4: {
 
 			try {
-				String query = "Insert into Feedback (UserID,Rating)" + "values(?,?)";
+				String query = "Insert into Feedback (UserName,Rating)" + "values(?,?)";
 				PreparedStatement ps2 = conn.prepareStatement(query);
-				ps2.setInt(1, d);
+				ps2.setString(1, e);
 				ps2.setString(2, "Good");
 				ps2.execute();
 				System.out.println("Thankyou! Your Feedback is Important to Us");
@@ -323,9 +327,9 @@ public class SuperBazaar {
 		case 3: {
 
 			try {
-				String query = "Insert into Feedback (UserID,Rating)" + "values(?,?)";
+				String query = "Insert into Feedback (UserName,Rating)" + "values(?,?)";
 				PreparedStatement ps2 = conn.prepareStatement(query);
-				ps2.setInt(1, d);
+				ps2.setString(1, e);
 				ps2.setString(2, "OK");
 				ps2.execute();
 				System.out.println("Thankyou! Your Feedback is Important to Us");
@@ -350,9 +354,9 @@ public class SuperBazaar {
 		case 2: {
 
 			try {
-				String query = "Insert into Feedback (UserID,Rating)" + "values(?,?)";
+				String query = "Insert into Feedback (UserName,Rating)" + "values(?,?)";
 				PreparedStatement ps2 = conn.prepareStatement(query);
-				ps2.setInt(1, d);
+				ps2.setString(1, e);
 				ps2.setString(2, "Poor");
 				ps2.execute();
 				System.out.println("Thankyou! Your Feedback is Important to Us");
@@ -377,9 +381,9 @@ public class SuperBazaar {
 		case 1: {
 
 			try {
-				String query = "Insert into Feedback (UserID,Rating)" + "values(?,?)";
+				String query = "Insert into Feedback (UserName,Rating)" + "values(?,?)";
 				PreparedStatement ps2 = conn.prepareStatement(query);
-				ps2.setInt(1, d);
+				ps2.setString(1, e);
 				ps2.setString(2, "Very Poor");
 				ps2.execute();
 				System.out.println("Thankyou! Your Feedback is Important to Us");
@@ -406,6 +410,8 @@ public class SuperBazaar {
 		}
 		}
 	}
+
+	
 
 	private static void updation() {
 		// TODO Auto-generated method stub
@@ -470,7 +476,7 @@ public class SuperBazaar {
 		String Userpassword = sc1.next();
 		System.out.println("Enter your Email");
 		String Email = sc1.next();
-		String query = "Insert into userdetails (UserName,Gender,PhoneNo,UserPassword,Email)" + "values(?,?,?,?,?);";
+		String query = "Insert into UserDetails (UserName,Gender,PhoneNo,UserPassword,Email)" + "values(?,?,?,?,?);";
 		try {
 			PreparedStatement ps2 = conn.prepareStatement(query);
 			ps2.setString(1, UserName);
@@ -501,13 +507,15 @@ public class SuperBazaar {
 	private static void productAdmin() {
 		// TODO Auto-generated method stub
 		Scanner sc = null;
-		System.out.println("Add Products:Press 1\nView Customer Feedback:Press 2");
+		System.out.println("Add Products:Press 1\nView Customer Feedback:Press 2\nLogout:Press 3");
 		sc = new Scanner(System.in);
 		int p=sc.nextInt();
 		switch(p) {
 		case 1:{
-			int prodno = 1;
-			while (prodno >= 1) {
+			
+			 System.out.println("How Many Products To be added?");
+			int nop=sc.nextInt();
+			for(int qw=nop;qw!=0;qw--) {
 				sc = new Scanner(System.in);
 				System.out.println("Enter the Product Name");
 				String prodName = sc.nextLine();
@@ -521,10 +529,10 @@ public class SuperBazaar {
 				System.out.println("QuantitySold:");
 				int qtysld = qty - qtyavl;
 				System.out.println(+qtysld);
-				System.out.println("Active or Not");
+				System.out.println("Active or Not(Enter True or False)");
 				boolean value = sc.nextBoolean();
 				byte act = (byte) booleanToInt(value);
-				System.out.println("Available for SALE?");
+				System.out.println("Available for SALE?(Enter True or False)");
 				boolean value1 = sc.nextBoolean();
 				byte sale = (byte) booleanToInt(value1);
 
@@ -543,11 +551,13 @@ public class SuperBazaar {
 					boolean status = ps.execute();
 					if (!status) {
 						System.out.println("Product Added Successfully");
+					
 
 					} else {
 						System.out.println("Product Cannot Be Added");
+					
 					}
-					prodno++;
+					
 				
 				
 				} catch (SQLException e) {
@@ -555,7 +565,7 @@ public class SuperBazaar {
 					e.printStackTrace();
 				}
 
-			}
+			}productAdmin();
 break;
 		}case 2:{
 			try {
@@ -563,9 +573,10 @@ break;
 				PreparedStatement ps=conn.prepareStatement(query);
 				ResultSet result = ps.executeQuery();
 				while (result.next()) {
-					int ui= result.getInt("UserID");
+					String ui= result.getString("UserName");
 					String rat = result.getString("Rating");
-					System.out.println("UserID|Rating\n"+ui+"     |" +rat);
+					System.out.println("UserName|Rating\n"+ui+"     |" +rat);
+					productAdmin();
 					break;
 
 				}
@@ -575,6 +586,9 @@ break;
 				e.printStackTrace();
 			}
 
+		}case 3:{
+			EnterUser();
+			break;
 		}
 		}
 				
