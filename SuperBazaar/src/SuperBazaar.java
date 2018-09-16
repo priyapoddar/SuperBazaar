@@ -359,6 +359,7 @@ public class SuperBazaar {
 				ps2.setString(1, e);
 				ps2.setString(2, "Poor");
 				ps2.execute();
+				
 				System.out.println("Thankyou! Your Feedback is Important to Us");
 				System.out.println("For LogOut:Press 1\nTo Continue Shopping:Press 2");
 				Scanner sq = new Scanner(System.in);
