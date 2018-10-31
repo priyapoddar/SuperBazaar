@@ -565,6 +565,7 @@ public class SuperBazaar {
 			break;
 		}
 		case 2: {
+			System.out.println("UserName|Rating\n");
 			try {
 				String query = "Select * from Feedback";
 				PreparedStatement ps = conn.prepareStatement(query);
@@ -572,11 +573,11 @@ public class SuperBazaar {
 				while (result.next()) {
 					String ui = result.getString("UserName");
 					String rat = result.getString("Rating");
-					System.out.println("UserName|Rating\n" + ui + "     |" + rat);
-					productAdmin();
-					break;
+					System.out.println( ui + "     |" + rat);
+					
+				
 
-				}
+				}productAdmin();
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
